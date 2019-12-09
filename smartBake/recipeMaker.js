@@ -21,14 +21,17 @@ var qs = require('querystring');
 
         request.on('end', function () {
             var post = qs.parse(body);
-
+           
+        //creating variables for Recipe name, ingredients, weights & description
         var filename = post['recipe'].toString();
         var ingr = post['ingredient'].toString();
         var w = post['weight'].toString();
         var desc = post['description'].toString();
 
 
+   //begin FACTORY pattern
 
+    //functions to access the name and type of objects 
 
     function Recipe(name){
         this.name = name
@@ -52,6 +55,8 @@ var qs = require('querystring');
 
     //Factory Pattern
     function RecipeFactory(){
+     //assigning different cases per type
+
         this.create = (name, type) => {
             switch(type){
 
@@ -79,6 +84,8 @@ var qs = require('querystring');
 
 
 
+            //The application will read in this generated .txt file to know which weights the user is expected to meaure
+            //this file generation utilizes the Iterator Pattern in order to only retrieve the weight element
             fs.appendFile(`data/${filename}.txt`, this.name, (err) => { 
 
             if (err) throw err;    
@@ -100,13 +107,16 @@ var qs = require('querystring');
     console.log(typeof ingr)
     console.log(w)*/
 
+    
+     // The users are able to create recipes and view them again through the html files generated below. These .htmls are stored
+    //in a folder and can be seen on the "Explore" tab on the website.
    var recipeContent = `<!DOCTYPE html> <html lang="en"> <head> <title>Recipe</title> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> </head> <body> <div class="Top"> <a href="http://localhost:8000/Recipes"> <h1 class="Gohome" type="text"> <strong> back to RecipeBook </strong> </h1> </a> <br><h2>'${filename}'</h2><br><h5>${desc}</h5><br><h3>Ingredients: ${ingr}</h3><br><h3>Weights: ${w}</h3></html>`
    fs.writeFile(`Recipes/${filename}.html`, recipeContent, (error) => { /* handle error */ });
 
 
 
 
-
+//instantiating recipeBook
     const recipeFactory = new RecipeFactory()
     const recipeBook = []
 
@@ -115,6 +125,8 @@ var qs = require('querystring');
     recipeBook.push(recipeFactory.create(`${ingr}`, 1))
     recipeBook.push(recipeFactory.create(`${w}`, 2))
 
+           
+//going through the instantiated "recipebook" and passing it to the iterator pattern
 
     recipeBook.forEach( item => {
 
