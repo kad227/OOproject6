@@ -1,0 +1,84 @@
+<!--
+sources:
+	http://www.sanwebcorner.com/2017/02/dynamically-generate-form-fields-using.html
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Bake Create</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+
+<div class= "Top">
+  <a href='http://localhost:8000/home.html'>
+    <h1 class="Home" type="text" method="Gohome"> 
+    <strong> Smart Bake </strong>
+    </h1>
+  </a>
+    <p align="left"><img src="https://www.merchantsmarket.com/wp-content/uploads/2018/04/recipe-icon.png" style="width:142px;height:142px;" ></p>
+  <br>
+
+</div>
+
+<body>
+<div class="container1">
+<button class="add_form_field">Add New ingredient &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
+<form class="recipeInput" method="post">
+<div>
+    <input type="submit" value="Submit"><br>
+    Recipe Name:<br>
+    <input type="text" name="recipe" id="recipename">
+    <br>Description:<br>
+    <input type="text" name="description" id="desc" placeholder="Serving size etc...">
+    <br>
+	<br>Ingredient:<br>
+	<input type="text" name="ingredient" id="ing1">
+	<br>Weight:<br>
+	<input type="text" name="weight" id="wgt1">
+	
+    
+</div>
+
+</form>
+
+
+
+</div>
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    var max_fields      = 10;
+    var wrapper         = $(".recipeInput");
+    var add_button      = $(".add_form_field");
+
+
+    	    
+ 
+    var input_number = 1;
+    $(add_button).click(function(e){
+        e.preventDefault();
+        if(input_number < max_fields){
+            input_number++;
+            $(wrapper).append(`<div> Ingredient:<br><input type="text" name="ingredient" id="ing${input_number}"><br>Weight:<br><input type="text" name="weight" id="wgt${input_number}"><a href="#" class="delete">Delete</a></div>`); //add input box
+        }
+  else
+  {
+  alert(`You Reached the limits ${input_number}`);
+  }
+    });
+ 
+    $(wrapper).on("click",".delete", function(e){
+        e.preventDefault(); $(this).parent('div').remove(); input_number--;
+    });
+
+});
+</script>
+
+
+
+</body>	
+
+</html>
